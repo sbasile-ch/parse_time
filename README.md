@@ -15,10 +15,10 @@
 #### Usage:
 ```
 ❯ node parseTime.js 'now()+1y+1y+4y-5y+666d-7566m+55s-1s+45mon-1234s+7d'
-2029-05-09T14:38:18.244Z
+2029-05-09T14:38:18Z
 
 ❯ node parseTime.js 'now()+1y+1y+4y-5y+666d-7566m+55s-1s+45mon-1234s+7d@d'
-2029-05-14T00:00:00.904Z
+2029-05-14T00:00:00Z
 ```
 
 ### Unit tests

@@ -52,7 +52,7 @@ function parse (text) {
             var delta = parse_delta(delta_txt)
             var d = modifiers[modifier]();
             apply_delta (d, delta, units[snap]);
-            return d.toISOString();
+            return d.toISOString().replace(/\.\d+Z$/ig, 'Z');
         }
         else { throw new Error(`Invalid input format:'${text}'`) }
     }
