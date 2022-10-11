@@ -11,3 +11,15 @@
 
 ### JS / node
 [parseTime.js](https://github.com/sbasile-ch/parse_time/blob/master/parseTime.js) starts matching [parseTime.py](https://github.com/sbasile-ch/parse_time/blob/master/parseTime.py) and then adds the missing code, relying on the support provided by [Date](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date)
+
+#### Usage:
+```
+❯ node parseTime.js 'now()+1y+1y+4y-5y+666d-7566m+55s-1s+45mon-1234s+7d'
+2029-05-09T14:38:18.244Z
+
+❯ node parseTime.js 'now()+1y+1y+4y-5y+666d-7566m+55s-1s+45mon-1234s+7d@d'
+2029-05-14T00:00:00.904Z
+```
+
+### Unit tests
+![Unit tests](https://github.com/sbasile-ch/parse_time/blob/master/specs/unit_tests.png "Unit tests")

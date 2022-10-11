@@ -1,0 +1,23 @@
+{
+  "name": "parsetime",
+  "version": "1.0.0",
+  "description": "parse time strings",
+  "main": "parseTime.js",
+  "scripts": {
+    "test": "mocha --reporter spec"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sbasile-ch/parse_time.git"
+  },
+  "author": "sbasile",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sbasile-ch/parse_time/issues"
+  },
+  "homepage": "https://github.com/sbasile-ch/parse_time#readme",
+  "dependencies": {
+    "chai": "^4.3.6",
+    "mocha": "^10.0.0"
+  }
+}
