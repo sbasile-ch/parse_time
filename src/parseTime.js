@@ -9,11 +9,20 @@ var pattern_whole = new RegExp (`(\\w+)\\(\\)([^@]*)(@(${alt_units}))?`);
 var pattern_delta = new RegExp (`([-+]\\d+)(${alt_units})(.*)`);
 var test_now_date;
 
-
 function mod_now()      { return new Date() }
 function mod_now_test() { return new Date(test_now_date) }
 function init_test(now) { test_now_date = now; modifiers.now = mod_now_test }
 
+function snap (text, n) {
+    if (n == undefined) { n = 0 }
+    var pattern_snap = new RegExp (`(.+)(([-T:\.]\\d+){${n},${n}})Z`);
+    var r = text.match (pattern_snap);
+    if (r) {
+            var head = r[1], to_snap = r[2];
+            text = `${head}${to_snap.replace (/\d/g, 0)}Z`
+    }
+    return text
+}
 
 function parse_delta (text) {
     var delta = Object.keys(units).reduce((obj, val) => {
@@ -35,13 +44,14 @@ function parse_delta (text) {
     return delta
 }
 
-function apply_delta (date, delta, snap) {
+function apply_delta (date, delta, n_snap) {
     date.setUTCFullYear (date.getUTCFullYear() + delta.y);
-    date.setUTCMonth    (units.mon < snap ? 0 : date.getUTCMonth()    + delta.mon);
-    date.setUTCDate     (units.d   < snap ? 1 : date.getUTCDate()     + delta.d);
-    date.setUTCHours    (units.h   < snap ? 0 : date.getUTCHours()    + delta.h);
-    date.setUTCMinutes  (units.m   < snap ? 0 : date.getUTCMinutes()  + delta.m);
-    date.setUTCSeconds  (units.s   < snap ? 0 : date.getUTCSeconds()  + delta.s);
+    date.setUTCMonth    (date.getUTCMonth()    + delta.mon);
+    date.setUTCDate     (date.getUTCDate()     + delta.d);
+    date.setUTCHours    (date.getUTCHours()    + delta.h);
+    date.setUTCMinutes  (date.getUTCMinutes()  + delta.m);
+    date.setUTCSeconds  (date.getUTCSeconds()  + delta.s);
+    return snap (date.toISOString(), n_snap);
 }
 
 function parse (text) {
@@ -51,8 +61,7 @@ function parse (text) {
             var modifier = r[1], delta_txt = r[2], x = r[3], snap = r[4];
             var delta = parse_delta(delta_txt)
             var d = modifiers[modifier]();
-            apply_delta (d, delta, units[snap]);
-            return d.toISOString().replace(/\.\d+Z$/ig, 'Z');
+            return apply_delta (d, delta, units[snap]);
         }
         else { throw new Error(`Invalid input format:'${text}'`) }
     }
